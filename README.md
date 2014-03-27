@@ -166,7 +166,7 @@ Exemplo de configuração de informações
 
 ### Opção de Análise de Risco
 
-Caso opte por não utilizar o serviço de análise de risco é só remover o `$cliente` e o objeto `$analise`
+Caso opte por não utilizar o serviço de análise de risco é só remover o `$cliente`, `$analise`, `$pedidoAnalise`
 
 E o serviço ficará assim
 
@@ -197,7 +197,7 @@ Após realizada as configurações acima para realizar uma transação
 
     // Sem AVS
 
-    $service->doTransacao(false, true);
+    $service->doTransacao(false, false);
 
 
     if($transacao->getStatus() === Transacao::STATUS_AUTORIZADA) {
