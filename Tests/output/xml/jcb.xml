@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<transacao xmlns="http://ecommerce.cbmp.com.br" versao="1.4.0" id="1">
+  <tid>100699306910AA481001</tid>
+  <pan>JyPpn+DNwbHckqRDOHz0keBEG56cISIFfG/b/+kd/W8=</pan>
+  <dados-pedido>
+    <numero>9024</numero>
+    <valor>1200</valor>
+    <moeda>986</moeda>
+    <data-hora>2014-03-27T18:09:25.695-03:00</data-hora>
+    <descricao>Descriï¿½ï¿½o do Pedido</descricao>
+    <idioma>PT</idioma>
+    <taxa-embarque>0</taxa-embarque>
+  </dados-pedido>
+  <forma-pagamento>
+    <bandeira>jcb</bandeira>
+    <produto>1</produto>
+    <parcelas>1</parcelas>
+  </forma-pagamento>
+  <status>4</status>
+  <autenticacao>
+    <codigo>4</codigo>
+    <mensagem>Transacao sem autenticacao</mensagem>
+    <data-hora>2014-03-27T18:09:25.704-03:00</data-hora>
+    <valor>1200</valor>
+    <eci>7</eci>
+  </autenticacao>
+  <autorizacao>
+    <codigo>4</codigo>
+    <mensagem>Transação autorizada</mensagem>
+    <data-hora>2014-03-27T18:09:25.708-03:00</data-hora>
+    <valor>1200</valor>
+    <lr>00</lr>
+    <arp>123456</arp>
+    <nsu>092168</nsu>
+  </autorizacao>
+</transacao>

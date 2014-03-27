@@ -1,0 +1,31 @@
+{
+    "name": "nezkal/cielo",
+    "description": "Classe para integração com o Webservice da Cielo e a ferramenta de Análise de Risco",
+    "type": "library",
+    "license": "GPL-3.0+",
+    "keywords": ["cielo", "payment", "gateway", "credit", "cart", "risk", "analisis"],
+    "authors": [
+        {
+            "name": "Artur Magalhães",
+            "email": "nezkal@gmail.com",
+            "role": "developer/co-founder"
+        }
+    ],
+    "support": {
+        "email": "nezkal@gmail.com",
+        "issues": "https://github.com/nezkal/Cielo/issues",
+        "source": "https://github.com/nezkal/Cielo",
+        "wiki": "https://github.com/nezkal/Cielo/wiki"
+    },
+    "autoload": {
+        "psr-0": {
+            "Tritoq\\Payment": "src/"
+        }
+    },
+
+    "require": {
+        "php": ">=5.3"
+    },
+
+    "minimum-stability": "dev"
+}
