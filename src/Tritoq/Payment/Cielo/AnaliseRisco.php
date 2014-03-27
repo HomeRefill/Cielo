@@ -8,8 +8,6 @@
 
 namespace Tritoq\Payment\Cielo;
 
-
-use Symfony\Component\DependencyInjection\SimpleXMLElement;
 use Tritoq\Payment\Cielo\AnaliseRisco\ClienteAnaliseRiscoInterface;
 use Tritoq\Payment\Cielo\AnaliseRisco\PedidoAnaliseRisco;
 use Tritoq\Payment\Exception\InvalidArgumentException;
