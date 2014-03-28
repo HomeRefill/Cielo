@@ -9,6 +9,18 @@ use Tritoq\Payment\Cielo\Pedido;
 use Tritoq\Payment\Cielo\Portador;
 use Tritoq\Payment\Cielo\Transacao;
 
+/**
+ *
+ * Classe de teste unitário para verificação da integração com o WebService da Cielo
+ *
+ *
+ * Class CieloServiceTest
+ *
+ * @category Library
+ * @copyright Artur Magalhães <nezkal@gmail.com>
+ * @package Tritoq\Payment\Tests
+ * @license GPL-3.0+
+ */
 class CieloServiceTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -25,6 +37,9 @@ class CieloServiceTest extends \PHPUnit_Framework_TestCase
      */
     protected $analise;
 
+    /**
+     * Configuração e população de dados
+     */
     public function setUp()
     {
         $portador = new Portador();
@@ -78,7 +93,7 @@ class CieloServiceTest extends \PHPUnit_Framework_TestCase
             ->setPrecoTotal(400.00)
             ->setPrecoUnitario(390.00);
 
-        //
+        // Setando informações para análise de Risco
         $cliente = new AnaliseRisco\Modelo\ClienteAnaliseRiscoTest();
         $cliente->nome = 'Artur';
         $cliente->sobrenome = 'Magahalhaes';
@@ -107,6 +122,7 @@ class CieloServiceTest extends \PHPUnit_Framework_TestCase
             ->setErroIndisponibilidade(AnaliseRisco::ACAO_MANUAL_POSTERIOR)
             ->setDeviceFingerPrintID(md5('valor'));
 
+        // Setando o webservice
         $service = new CieloService(array(
             'portador' => $portador,
             'loja' => $loja,
@@ -116,6 +132,7 @@ class CieloServiceTest extends \PHPUnit_Framework_TestCase
             'analise' => $this->analise
         ));
 
+        // Desabilitando o análise de risco
         $service->setHabilitarAnaliseRisco(false);
 
         if (!is_dir('xml')) {
@@ -127,7 +144,7 @@ class CieloServiceTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     *
+     *  Teste da transação
      */
     public function testDoTransacao()
     {
@@ -137,6 +154,9 @@ class CieloServiceTest extends \PHPUnit_Framework_TestCase
         $reqs[0]->getXmlRetorno()->asXML(OUTPUT . 'xml/transacao.xml');
     }
 
+    /**
+     * Teste da transação com análise de risco
+     */
     public function testDoTransacaoAnaliseRisco()
     {
         $this->gateway->setHabilitarAnaliseRisco(true);
@@ -147,6 +167,9 @@ class CieloServiceTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals((string)Transacao::STATUS_AUTORIZADA, $this->transacao->getStatus());
     }
 
+    /**
+     * Teste da captura da transação
+     */
     public function testDoCaptura()
     {
         $this->gateway->doTransacao(false, true);
@@ -156,6 +179,9 @@ class CieloServiceTest extends \PHPUnit_Framework_TestCase
         $reqs[0]->getXmlRetorno()->asXML(OUTPUT . 'xml/captura.xml');
     }
 
+    /**
+     * Teste da consulta da transação
+     */
     public function testDoConsulta()
     {
         $this->gateway->doTransacao(false, true);
@@ -165,6 +191,9 @@ class CieloServiceTest extends \PHPUnit_Framework_TestCase
         $reqs[0]->getXmlRetorno()->asXML(OUTPUT . 'xml/consulta.xml');
     }
 
+    /**
+     * Teste do cancelamento da transação
+     */
     public function testDoCancela()
     {
         $this->gateway->doTransacao(false, true);
@@ -254,6 +283,9 @@ class CieloServiceTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     *
+     * Teste com os cartões fornecidos pela documentação da Cielo
+     *
      * @param $nomePortador
      * @param $bandeira
      * @param $numero

@@ -137,6 +137,7 @@ Exemplo de configuração de informações
     *
     */
 
+    // Para qualquer ação será revista com ação manual posterior, caso seja de baixo risco, a transação será capturada automaticamente
 
     $this->analise = new AnaliseRisco();
     $this->analise

@@ -1,69 +1,113 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: arturmagalhaes
- * Date: 25/03/14
- * Time: 16:41
- */
 
 namespace Tritoq\Payment\Cielo\AnaliseRisco;
 
-
 use Tritoq\Payment\Exception\InvalidArgumentException;
 
+/**
+ *
+ * Representação de um pedido que será enviado para análise de risco da Cielo
+ *
+ *
+ * Class PedidoAnaliseRisco
+ *
+ * @category Library
+ * @copyright Artur Magalhães <nezkal@gmail.com>
+ * @package Tritoq\Payment\Cielo\AnaliseRisco
+ * @license GPL-3.0+
+ */
 class PedidoAnaliseRisco
 {
     /**
+     *
+     * ID do pedido
+     *
      * @var integer
      */
     protected $id;
 
     /**
+     *
+     * Tipo de moeda
+     *
      * @var string
      */
     protected $moeda = 'BRL';
 
     /**
+     *
+     * Preço Total do pedido = Valor do pedido + frete
+     *
      * @var double
      */
     protected $precoTotal;
 
     /**
+     *
+     * Preço parcial do pedido, sem o frete
+     *
      * @var double
      */
     protected $precoUnitario;
 
     /**
+     *
+     * Endereço de entrega
+     *
      * @var string
      */
     protected $endereco;
 
     /**
+     *
+     * Complemento
+     *
      * @var string
      */
     protected $complemento;
 
     /**
+     *
+     * Cidade do pedido
+     *
      * @var string
      */
     protected $cidade;
 
     /**
+     *
+     * Sliga do Estado
+     *
+     * Ex: SC, RS, SP
+     *
      * @var string
      */
     protected $estado;
 
     /**
+     *
+     * Cep de entrega (somente números)
+     *
+     * Ex: 89802140
+     *
      * @var string
      */
     protected $cep;
 
     /**
+     *
+     * Sigla do páis
+     *
+     * Ex: BR
+     *
      * @var string
      */
     protected $pais;
 
     /**
+     *
+     * Seta o ID do pedido
+     *
      * @param int $id
      * @return $this
      * @throws \Tritoq\Payment\Exception\InvalidArgumentException
@@ -79,6 +123,9 @@ class PedidoAnaliseRisco
     }
 
     /**
+     *
+     * Retorna o ID do pedido
+     *
      * @return int
      */
     public function getId()
@@ -87,6 +134,11 @@ class PedidoAnaliseRisco
     }
 
     /**
+     *
+     * Seta a moeda do pedido
+     *
+     * Ex: BRL
+     *
      * @param string $moeda
      * @throws \Tritoq\Payment\Exception\InvalidArgumentException
      * @return $this
@@ -103,6 +155,9 @@ class PedidoAnaliseRisco
     }
 
     /**
+     *
+     * Retorna a moeda do pedido
+     *
      * @return string
      */
     public function getMoeda()
@@ -111,6 +166,11 @@ class PedidoAnaliseRisco
     }
 
     /**
+     *
+     * Seta o preço total do pedido
+     *
+     * Valor total do pedido + Frete
+     *
      * @param float $precoTotal
      * @return $this
      */
@@ -121,6 +181,9 @@ class PedidoAnaliseRisco
     }
 
     /**
+     *
+     * Retorna o preço total do pedido
+     *
      * @return float
      */
     public function getPrecoTotal()
@@ -129,6 +192,10 @@ class PedidoAnaliseRisco
     }
 
     /**
+     *
+     * Seta o preço parcial do pedido sem o frete
+     *
+     *
      * @param float $precoUnitario
      * @return $this
      */
@@ -139,6 +206,9 @@ class PedidoAnaliseRisco
     }
 
     /**
+     *
+     * Retorna o preço parcial/unitário do pedido
+     *
      * @return float
      */
     public function getPrecoUnitario()
@@ -147,6 +217,12 @@ class PedidoAnaliseRisco
     }
 
     /**
+     *
+     * Seta o CEP do pedido (somente números)
+     *
+     * Ex: 89802140
+     *
+     *
      * @param string $cep
      * @throws \Tritoq\Payment\Exception\InvalidArgumentException
      * @return $this
@@ -161,6 +237,9 @@ class PedidoAnaliseRisco
     }
 
     /**
+     *
+     * Retorna o CEP do pedido
+     *
      * @return string
      */
     public function getCep()
@@ -169,6 +248,9 @@ class PedidoAnaliseRisco
     }
 
     /**
+     *
+     * Seta a cidade do pedido
+     *
      * @param string $cidade
      * @return $this
      */
@@ -179,6 +261,9 @@ class PedidoAnaliseRisco
     }
 
     /**
+     *
+     * Retorna a cidade do pedido
+     *
      * @return string
      */
     public function getCidade()
@@ -187,6 +272,9 @@ class PedidoAnaliseRisco
     }
 
     /**
+     *
+     * Seta o complemento do pedido
+     *
      * @param string $complemento
      * @return $this
      */
@@ -197,6 +285,9 @@ class PedidoAnaliseRisco
     }
 
     /**
+     *
+     * Retorna o complemento do pedido
+     *
      * @return string
      */
     public function getComplemento()
@@ -205,6 +296,9 @@ class PedidoAnaliseRisco
     }
 
     /**
+     *
+     * Seta o endereço do pedido
+     *
      * @param string $endereco
      * @return $this
      */
@@ -215,6 +309,9 @@ class PedidoAnaliseRisco
     }
 
     /**
+     *
+     * Retorna o endereço do pedido
+     *
      * @return string
      */
     public function getEndereco()
@@ -223,6 +320,9 @@ class PedidoAnaliseRisco
     }
 
     /**
+     *
+     * Seta a sliga do Estado do pedido
+     *
      * @param string $estado
      * @throws \Tritoq\Payment\Exception\InvalidArgumentException
      * @return $this
@@ -237,6 +337,9 @@ class PedidoAnaliseRisco
     }
 
     /**
+     *
+     * Retorna o sliga do estado
+     *
      * @return string
      */
     public function getEstado()
@@ -245,6 +348,9 @@ class PedidoAnaliseRisco
     }
 
     /**
+     *
+     * Seta o país do pedido
+     *
      * @param string $pais
      * @throws \Tritoq\Payment\Exception\InvalidArgumentException
      * @return $this
@@ -259,6 +365,9 @@ class PedidoAnaliseRisco
     }
 
     /**
+     *
+     * Retorna o país do pedido
+     *
      * @return string
      */
     public function getPais()

@@ -1,17 +1,22 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: arturmagalhaes
- * Date: 26/03/14
- * Time: 14:28
- */
-
 namespace Tritoq\Payment\Tests;
 
 
 use Tritoq\Payment\Cielo\AnaliseRisco;
 use Tritoq\Payment\Cielo\AnaliseRisco\PedidoAnaliseRisco;
 
+/**
+ *
+ * Classe de teste unitário para verificação da Analise de Risco e geração do XML
+ *
+ *
+ * Class AnaliseRiscoTest
+ *
+ * @category Library
+ * @copyright Artur Magalhães <nezkal@gmail.com>
+ * @package Tritoq\Payment\Tests
+ * @license GPL-3.0+
+ */
 class AnaliseRiscoTest extends \PHPUnit_Framework_TestCase
 {
 
@@ -20,7 +25,9 @@ class AnaliseRiscoTest extends \PHPUnit_Framework_TestCase
      */
     protected $analise;
 
-
+    /**
+     *  Configurações iniciais
+     */
     public function setUp()
     {
         $pedido = new PedidoAnaliseRisco();
@@ -67,6 +74,9 @@ class AnaliseRiscoTest extends \PHPUnit_Framework_TestCase
         }
     }
 
+    /**
+     *  Cria o XML e salva na pasta de saída de testes
+     */
     public function testCriarXml()
     {
         $xml = $this->analise->criarXml();

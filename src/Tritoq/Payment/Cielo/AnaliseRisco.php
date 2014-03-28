@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: arturmagalhaes
- * Date: 21/03/14
- * Time: 18:01
- */
 
 namespace Tritoq\Payment\Cielo;
 
@@ -12,68 +6,130 @@ use Tritoq\Payment\Cielo\AnaliseRisco\ClienteAnaliseRiscoInterface;
 use Tritoq\Payment\Cielo\AnaliseRisco\PedidoAnaliseRisco;
 use Tritoq\Payment\Exception\InvalidArgumentException;
 
+/**
+ *
+ * Responsável por montar e organizar as informações que serão enviadas para Análise de Risco
+ *
+ *
+ * Class AnaliseRisco
+ *
+ * @category Library
+ * @copyright Artur Magalhães <nezkal@gmail.com>
+ * @package Tritoq\Payment\Cielo
+ * @license GPL-3.0+
+ */
 class AnaliseRisco
 {
-
+    /**
+     *
+     * Valor da Ação Desfazer da Análise
+     *
+     * @const string
+     */
     const ACAO_DESFAZER = 'desfazer';
 
+    /**
+     *
+     * Valor da Ação para decisão manual posterior
+     *
+     * @const string
+     */
     const ACAO_MANUAL_POSTERIOR = 'amp';
 
+    /**
+     *
+     * Valor da Ação para capturar (baixo risco)
+     *
+     * @const string
+     */
     const ACAO_CAPTURAR = 'capturar';
 
     /**
+     *
+     * Objeto Cliente
+     *
      * @var ClienteAnaliseRiscoInterface
      */
     private $cliente;
 
     /**
+     *
+     * Objeto do Pedido
+     *
      * @var PedidoAnaliseRisco
      */
     private $pedido;
 
-
     // configurações da análise de risco
 
     /**
+     *
+     * Ação automática caso o valor seja de alto risco
+     *
      * @var string
      */
     private $altoRisco;
 
     /**
+     *
+     * Açao automática caso o valor seja de medio risco
+     *
      * @var string
      */
     private $medioRisco;
 
     /**
+     *
+     * Ação automática caso o valor seja de baixo risco
+     *
      * @var string
      */
     private $baixoRisco;
 
     /**
+     *
+     * Ação automática caso haja erro nos dados
+     *
      * @var string
      */
     private $erroDados;
 
     /**
+     *
+     * Ação automática caso haja indisponibilidade no serviço
+     *
      * @var string
      */
     private $erroIndisponibilidade;
+
     /**
+     *
+     * Indicador de verifição
+     *
      * @var string
      */
     private $afsServiceRun;
 
     /**
+     *
+     * Tags adicionais ao XML
+     *
      * @var array
      */
     private $tagsAdicionais;
 
     /**
+     *
+     * Opções adicionais ao XML
+     *
      * @var array
      */
     private $tagsOpcionais;
 
     /**
+     *
+     * Valor do Device Finger Print ID (consultar manual)
+     *
      * @var string
      */
     private $deviceFingerPrintID;
@@ -100,6 +156,7 @@ class AnaliseRisco
     }
 
     /**
+     * Método que preenche algumas tags já requeridas
      *
      */
     private function prencherTagsElementosVaziosRequeridos()
@@ -111,6 +168,9 @@ class AnaliseRisco
         }
     }
 
+    /**
+     * Método que preenche valores opcionais requeridos
+     */
     private function preencherOpcionaisElementosVaziosRequeridos()
     {
         $dataProvider = array(
@@ -124,7 +184,12 @@ class AnaliseRisco
         }
     }
 
-
+    /**
+     *
+     * Método que adiciona ao XML os valores opcionais
+     *
+     * @param \SimpleXMLElement $xml
+     */
     private function addXmlOpcionais(\SimpleXMLElement $xml)
     {
         if (sizeof($this->tagsOpcionais) > 0) {
@@ -135,6 +200,12 @@ class AnaliseRisco
 
     }
 
+    /**
+     *
+     * Método que adiciona ao XML os valores adicionais
+     *
+     * @param \SimpleXMLElement $xml
+     */
     private function addXmlAdicionais(\SimpleXMLElement $xml)
     {
         if (sizeof($this->tagsAdicionais) > 0) {
@@ -146,14 +217,22 @@ class AnaliseRisco
     }
 
     /**
+     *
+     * Seta as tags opcionais
+     *
      * @param array $tagsOpcionais
+     * @return $this
      */
     public function setTagsOpcionais($tagsOpcionais)
     {
         $this->tagsOpcionais = $tagsOpcionais;
+        return $this;
     }
 
     /**
+     *
+     * Retorna as tags Opcionais
+     *
      * @return array
      */
     public function getTagsOpcionais()
@@ -162,6 +241,9 @@ class AnaliseRisco
     }
 
     /**
+     *
+     * Adiciona uma tag opcional
+     *
      * @param $tag
      * @param $valor
      * @return $this
@@ -174,6 +256,9 @@ class AnaliseRisco
 
 
     /**
+     *
+     * Adciona uma tag Adicional
+     *
      * @param $tag
      * @param $valor
      * @return $this
@@ -185,6 +270,9 @@ class AnaliseRisco
     }
 
     /**
+     *
+     * Retorna uma tag adicional
+     *
      * @return array
      */
     public function getTagsAdicionais()
@@ -193,6 +281,12 @@ class AnaliseRisco
     }
 
     /**
+     *
+     * Seta a ação automática caso retorne a transação como auto risco
+     *
+     * desfazer     ACAO_DESFAZER
+     * amp          ACAO_MANUAL_POSTERIOR
+     *
      * @param string $altoRisco
      * @throws \Tritoq\Payment\Exception\InvalidArgumentException
      * @return $this
@@ -212,6 +306,9 @@ class AnaliseRisco
     }
 
     /**
+     *
+     * Retorna o valor do indicador de alto risco
+     *
      * @return string
      */
     public function getAltoRisco()
@@ -220,6 +317,12 @@ class AnaliseRisco
     }
 
     /**
+     *
+     * Seta a ação automática caso retorno da análise de risco seja como baixo risco
+     *
+     * capturar      ACAO_CAPTURAR
+     * amp           ACAO_MANUAL_POSTERIOR
+     *
      * @param string $baixoRisco
      * @throws \Tritoq\Payment\Exception\InvalidArgumentException
      * @return $this
@@ -238,6 +341,9 @@ class AnaliseRisco
     }
 
     /**
+     *
+     * Retorna o valor do indicador de baixo risco
+     *
      * @return string
      */
     public function getBaixoRisco()
@@ -246,6 +352,14 @@ class AnaliseRisco
     }
 
     /**
+     *
+     * Seta a ação automática caso retorno da análise de risco seja como médio risco
+     *
+     * capturar         ACAO_CAPTURAR
+     * amp              ACAO_MANUAL_POSTERIOR
+     * desfazer         ACAO_DESFAZER
+     *
+     *
      * @param string $medioRisco
      * @throws \Tritoq\Payment\Exception\InvalidArgumentException
      * @return $this
@@ -266,6 +380,9 @@ class AnaliseRisco
     }
 
     /**
+     *
+     * Retorna o valor do indicador para médio risco
+     *
      * @return string
      */
     public function getMedioRisco()
@@ -274,6 +391,13 @@ class AnaliseRisco
     }
 
     /**
+     *
+     * Seta o indicador para caso houver erro de dados na análise
+     *
+     * desfazer         ACAO_DESFAZER
+     * capturar         ACAO_CAPTURAR
+     * amp              ACAO_MANUAL_POSTERIOR
+     *
      * @param string $erroDados
      * @throws \Tritoq\Payment\Exception\InvalidArgumentException
      * @return $this
@@ -301,6 +425,14 @@ class AnaliseRisco
     }
 
     /**
+     *
+     * Seta o indicador caso houver indisponibildade
+     *
+     * desfazer         ACAO_DESFAZER
+     * capturar         ACAO_CAPTURAR
+     * amp              ACAO_MANUAL_POSTERIOR
+     *
+     *
      * @param string $erroIndisponibilidade
      * @throws \Tritoq\Payment\Exception\InvalidArgumentException
      * @return $this
@@ -328,6 +460,9 @@ class AnaliseRisco
     }
 
     /**
+     *
+     * Seta o indicador de Afs Service Run
+     *
      * @param string $afsServiceRun
      * @throws \Tritoq\Payment\Exception\InvalidArgumentException
      * @return $this
@@ -348,6 +483,9 @@ class AnaliseRisco
     }
 
     /**
+     *
+     * Retorna o indicador de Afs Service Run
+     *
      * @return string
      */
     public function getAfsServiceRun()
@@ -356,6 +494,9 @@ class AnaliseRisco
     }
 
     /**
+     *
+     * Seta o cliente
+     *
      * @param \Tritoq\Payment\Cielo\ClienteAnaliseRiscoInterface $cliente
      * @return $this
      */
@@ -366,6 +507,9 @@ class AnaliseRisco
     }
 
     /**
+     *
+     * Retorna o Cliente
+     *
      * @return \Tritoq\Payment\Cielo\ClienteAnaliseRiscoInterface
      */
     public function getCliente()
@@ -374,6 +518,9 @@ class AnaliseRisco
     }
 
     /**
+     *
+     * Seta o pedido da compra
+     *
      * @param \Tritoq\Payment\Cielo\PedidoAnaliseRisco $pedido
      * @return $this
      */
@@ -385,6 +532,9 @@ class AnaliseRisco
     }
 
     /**
+     *
+     * Retorna o pedido da compra
+     *
      * @return \Tritoq\Payment\Cielo\PedidoAnaliseRisco
      */
     public function getPedido()
@@ -393,6 +543,10 @@ class AnaliseRisco
     }
 
     /**
+     *
+     * Seta o valor de Device Finger Print ID - Ver documentação da Cielo
+     *
+     *
      * @param string $deviceFingerPrintID
      * @return $this
      */
@@ -403,6 +557,9 @@ class AnaliseRisco
     }
 
     /**
+     *
+     * Retorna o valor de Device Finger Print ID
+     *
      * @return string
      */
     public function getDeviceFingerPrintID()
@@ -412,6 +569,9 @@ class AnaliseRisco
 
 
     /**
+     *
+     * Método que cria o XML com as informações
+     *
      * @param \SimpleXMLElement $analise
      * @return SimpleXMLElement
      */
@@ -433,14 +593,10 @@ class AnaliseRisco
         $configuracao->addChild('erro-indisponibilidade', $this->erroIndisponibilidade);
         $analise->addChild('afsService_run', $this->getAfsServiceRun() ? 'true' : 'false');
 
-        /*
-         * Dados do Pedido
-         */
+        // ID do pedido
         $analise->addChild('merchantReferenceCode', $this->pedido->getId());
 
-        /*
-         * Endereço de cobrança
-         */
+        // Informações de cobranca
         $analise->addChild('billTo_street1', $this->pedido->getEndereco());
         $analise->addChild('billTo_street2', $this->pedido->getComplemento());
         $analise->addChild('billTo_city', $this->pedido->getCidade());
@@ -456,6 +612,7 @@ class AnaliseRisco
         $analise->addChild('billTo_phoneNumber', $this->cliente->getTelefone());
         $analise->addChild('billTo_ipAddress', $this->cliente->getIp());
 
+        // Informações de entrega do pedido
         $analise->addChild('shipto_street1', $this->cliente->getEndereco());
         $analise->addChild('shipto_street2', $this->cliente->getComplemento());
         $analise->addChild('shipto_city', $this->cliente->getCidade());
@@ -464,27 +621,32 @@ class AnaliseRisco
         $analise->addChild('shipto_postalCode', $this->cliente->getCep());
         $analise->addChild('shipTo_phoneNumber', $this->cliente->getTelefone());
 
+        // Device Finger Print ID
         $analise->addChild('deviceFingerprintID', 'null');
 
+        // Informações caso a venda seja de passagem área são obrigatórios, porém nulos
         $analise->addChild('decisionManager_travelData_completeRoute', 'NULL');
         $analise->addChild('decisionManager_travelData_departureDateTime', 'NULL');
         $analise->addChild('decisionManager_travelData_journeyType', 'NULL');
         $analise->addChild('decisionManager_travelData_leg_origin', '');
         $analise->addChild('decisionManager_travelData_leg_destination', '');
 
+        // informações de venda
         $analise->addChild('purchaseTotals_currency', $this->pedido->getMoeda());
         $analise->addChild('purchaseTotals_grandTotalAmount', number_format($this->pedido->getPrecoTotal(), 2));
         $analise->addChild('item_unitPrice', number_format($this->pedido->getPrecoUnitario(), 2));
 
+        // Informações do passageiro caso seja uma passagem área
         $analise->addChild('item_passengerFirstName', 'NULL');
         $analise->addChild('item_passengerLastName', 'NULL');
         $analise->addChild('item_passengerEmail', 'NULL');
         $analise->addChild('item_passengerID', 'NULL');
 
+        // Adiciona tags adicionais
         $this->addXmlAdicionais($analise);
 
+        // Adiciona Tags Opcionais, porém algumas requeridas pela Cielo são obrigatórias
         $mdd = $analise->addChild('mdd');
-
         $this->addXmlOpcionais($mdd);
 
         return $analise;
