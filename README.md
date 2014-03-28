@@ -369,4 +369,4 @@ Você pode verificar os resultados da análise de Resultado
 
 > Dentro da pasta [Testes](https://github.com/nezkal/Cielo/tree/master/Tests/output/xml) há resultados de XML e retornos feitos no PHPUnit.
 
-> Qualquer dúvida sobre a integração pode entrar em contato através [Artur Magalhães](mailto:nezkal@gmail.com).
+> Qualquer dúvida sobre a integração pode entrar em contato através do meu e-mail [Artur Magalhães](mailto:nezkal@gmail.com).
