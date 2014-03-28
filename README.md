@@ -369,4 +369,4 @@ Você pode verificar os resultados da análise de Resultado
 
 > Dentro da pasta [Testes](https://github.com/nezkal/Cielo/tree/master/Tests) há resultados de XML e retornos feitos no PHP Unit
 
-> Qualquer dúvida sobre a integração pode entrar em contato através [Artur Magalhães](artur@tritoq.com)
+> Qualquer dúvida sobre a integração pode entrar em contato através [Artur Magalhães](mailto:artur@tritoq.com)
