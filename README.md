@@ -305,6 +305,8 @@ Cancelamento da transação
 
 ```php
 
+    ...
+
     $transacao->setTid('numero_da_transacao');
     $service->doCancela();
 
@@ -315,3 +317,56 @@ Cancelamento da transação
     }
 
 ```
+
+### Verificação do Resultado da Análise
+
+Você pode verificar os resultados da análise de Resultado
+
+```php
+
+    ...
+
+    // Faz a consulta
+    $transacao->setTid('numero_da_transacao');
+    $service->doConsulta();
+
+    if($transacao->getAnaliseResultado() || isset($transacao->getStatusAnalise())) {
+
+        $resultado = $transacao->getAnaliseResultado();
+
+        $status = $resultado->getStatus();
+
+        switch($status) {
+            case AnaliseResultado::ALTO_RISCO:
+                ...
+            break
+            case AnaliseResultado::BAIXO_RISCO:
+                ...
+            break;
+            case AnaliseResultado::MEDIO_RISCO:
+                ...
+            break;
+
+            default:
+                echo 'Não foi possível obter o status da análise';
+            break;
+        }
+
+
+        // Listar os detalhes da análise
+
+        foreach($resultado->getDetalhes() as $detalhe) {
+
+            echo $detalhe;
+
+        }
+
+    }
+
+```
+
+## Informações Gerais
+
+> Dentro da pasta [Testes](https://github.com/nezkal/Cielo/tree/master/Tests) há resultados de XML e retornos feitos no PHP Unit
+
+> Qualquer dúvida sobre a integração pode entrar em contato através [Artur Magalhães](artur@tritoq.com)

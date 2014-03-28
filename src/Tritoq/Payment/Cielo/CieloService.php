@@ -2,6 +2,7 @@
 
 namespace Tritoq\Payment\Cielo;
 
+use Tritoq\Payment\Cielo\AnaliseRisco\AnaliseResultado;
 use Tritoq\Payment\Exception\InvalidArgumentException;
 use Tritoq\Payment\Exception\ResourceNotFoundException;
 use Tritoq\Payment\PortadorInterface;
@@ -425,6 +426,18 @@ class CieloService
 
             $this->transacao->setStatus($xmlRetorno->status);
 
+            if ($this->habilitarAnaliseRisco) {
+
+                $var = 'analise-fraude-retorno';
+                $analise = $xmlRetorno->$var;
+
+                $analiseResultado = new AnaliseResultado();
+                $analiseResultado->setUp($analise);
+
+                $this->transacao->setAnaliseResultado($analiseResultado);
+                $this->transacao->setStatusAnalise($analiseResultado->getStatus());
+            }
+
             if (!$this->transacao->getTid()) {
                 // Atualiza a TID da Transação
                 $this->transacao->setTid($xmlRetorno->tid);
@@ -660,6 +673,23 @@ class CieloService
         $requisicao = $this->enviaRequisicao($xml);
 
         // Atualiza informações da Transação
+        $this->updateTransacao($requisicao, Transacao::REQUISICAO_TIPO_CONSULTA);
+
+        return $this;
+    }
+
+    /**
+     *
+     * Método para debugar uma transação com simulação a um xml já salvo
+     *
+     * @param \SimpleXMLElement $xml
+     * @return $this
+     */
+    public function debugConsulta (\SimpleXMLElement $xml) {
+
+        $requisicao = new Requisicao();
+        $requisicao->setXmlRetorno($xml);
+
         $this->updateTransacao($requisicao, Transacao::REQUISICAO_TIPO_CONSULTA);
 
         return $this;

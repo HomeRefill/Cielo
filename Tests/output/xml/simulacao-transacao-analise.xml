@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<transacao versao="1.4.0" id="12b81817-8218-45b2-bcc9-df8421e850d7" xmlns="http://ecommerce.cbmp.com.br">
+    <tid>100699306908988F1001</tid>
+    <pan>uv9yI5tkhX9jpuCt+dfrtoSVM4U3gIjvrcwMBfZcadE=</pan>
+    <dados-pedido>
+        <numero>903952461</numero>
+        <valor>1000</valor>
+        <moeda>986</moeda>
+        <data-hora>2013-09-06T16:00:59.684-03:00</data-hora>
+        <descricao>[origem:0:0:0:0:0:0:0:1]</descricao>
+        <idioma>PT</idioma>
+        <taxa-embarque>0</taxa-embarque>
+    </dados-pedido>
+    <forma-pagamento>
+        <bandeira>visa</bandeira>       ?
+        <produto>1</produto>
+        <parcelas>1</parcelas>
+    </forma-pagamento>
+    <status>9</status>
+    <autenticacao>
+        <codigo>9</codigo>
+        <mensagem>Transacao sem autenticacao</mensagem>
+        <data-hora>2013-09-06T16:01:01.501-03:00</data-hora>
+        <valor>1000</valor>
+        <eci>7</eci>
+    </autenticacao>
+    <autorizacao>
+        <codigo>9</codigo>
+        <mensagem>Transação autorizada</mensagem>
+        <data-hora>2013-09-06T16:01:01.821-03:00</data-hora>
+        <valor>1000</valor>
+        <lr>00</lr>
+        <arp>123456</arp>
+        <nsu>563343</nsu>
+    </autorizacao>
+    <cancelamentos>
+        <cancelamento>
+            <codigo>9</codigo>
+            <mensagem>Transação desfeita</mensagem>
+            <data-hora>2013-09-06T16:01:24.257-03:00</data-hora>
+            <valor>1000</valor>
+        </cancelamento>
+    </cancelamentos>
+    <analise-fraude-retorno>
+        <statusRevisao>alto risco</statusRevisao>
+        <acao>A</acao>
+        <dataAnaliseFraude>06/09/2013 16:01:06</dataAnaliseFraude>
+        <listaDetalhesAnaliseFraude>
+            <detalhesAnaliseFraude>Velocidade - Informações de dispositivo, cadastrais,
+                de pedido ou pagamento utilizadas em muitas compras em curto período de
+                tempo.
+            </detalhesAnaliseFraude>
+            <detalhesAnaliseFraude>Risco - informações de conta, email, dispositivo ou
+                conexão são arriscados
+            </detalhesAnaliseFraude>
+            <detalhesAnaliseFraude>Geolocalização - Inconsistência entre IP do computador da compra e os dados
+                informados
+            </detalhesAnaliseFraude>
+            <detalhesAnaliseFraude>Mudança de identidade - Detecção de mudança de
+                identidade entre essa e outras compras realizadas. Como e-mail, nome e cpf que não se
+                repetem uniformemente entre elas
+            </detalhesAnaliseFraude>
+            <detalhesAnaliseFraude>Análise de risco efetuada com sucesso.</detalhesAnaliseFraude>
+        </listaDetalhesAnaliseFraude>
+        <scoreAnaliseFraude>99</scoreAnaliseFraude>
+        <nivelRiscoAnaliseFraude>alto risco</nivelRiscoAnaliseFraude>
+        <recomendacaoAnaliseFraude>Rejeitar</recomendacaoAnaliseFraude>
+    </analise-fraude-retorno>
+</transacao>

@@ -135,12 +135,26 @@ class CieloServiceTest extends \PHPUnit_Framework_TestCase
         // Desabilitando o análise de risco
         $service->setHabilitarAnaliseRisco(false);
 
-        if (!is_dir('xml')) {
-            mkdir('xml', 0775);
-        }
-
         $this->gateway = $service;
         $this->transacao = $transacao;
+    }
+
+    /**
+     * Teste do Retorno da Transação com análise de risco
+     */
+    public function testConsultaAnalise()
+    {
+        $this->gateway->setHabilitarAnaliseRisco(true);
+        $this->gateway->debugConsulta(new \SimpleXMLElement(file_get_contents(OUTPUT . 'xml/simulacao-transacao-analise.xml')));
+        $this->assertEquals($this->transacao->getAnaliseResultado()->getStatus(), AnaliseRisco\AnaliseResultado::STATUS_ALTO_RISCO);
+        $this->assertEquals($this->transacao->getAnaliseResultado()->getAcao(), 'A');
+        $this->assertEquals($this->transacao->getAnaliseResultado()->getPontuacao(), '99');
+
+        echo "Lista de detalhes da Análise:\n";
+
+        foreach ($this->transacao->getAnaliseResultado()->getDetalhes() as $detalhes) {
+            echo $detalhes . "\n";
+        }
     }
 
     /**

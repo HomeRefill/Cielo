@@ -199,6 +199,19 @@ class Requisicao
 
     /**
      *
+     * Seta o XML de Retorno
+     *
+     * @param \SimpleXMLElement $xmlRetorno
+     * @return $this
+     */
+    public function setXmlRetorno($xmlRetorno)
+    {
+        $this->xmlRetorno = $xmlRetorno;
+        return $this;
+    }
+
+    /**
+     *
      * Metódo de chamada da requisição
      *
      * Feita em curl

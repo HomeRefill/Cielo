@@ -2,6 +2,7 @@
 
 namespace Tritoq\Payment\Cielo;
 
+use Tritoq\Payment\Cielo\AnaliseRisco\AnaliseResultado;
 use Tritoq\Payment\Exception\InvalidArgumentException;
 
 /**
@@ -226,6 +227,16 @@ class Transacao
      */
     const REQUISICAO_TIPO_CONSULTA = 'consulta';
 
+
+    /**
+     *
+     * Resultado da Análise de Risco
+     *
+     * @var AnaliseResultado
+     */
+    private $analiseResultado;
+
+
     /**
      *
      * TID - Transaçao ID informada pela Cielo
@@ -293,6 +304,11 @@ class Transacao
      * @var integer
      */
     private $_status;
+
+    /**
+     * @var string
+     */
+    private $_statusAnalise;
 
     /**
      *
@@ -621,6 +637,42 @@ class Transacao
     public function getCampoLivre()
     {
         return $this->_campoLivre;
+    }
+
+    /**
+     * @param \Tritoq\Payment\Cielo\AnaliseRisco\AnaliseResultado $analiseResultado
+     * @return $this
+     */
+    public function setAnaliseResultado($analiseResultado)
+    {
+        $this->analiseResultado = $analiseResultado;
+        return $this;
+    }
+
+    /**
+     * @return \Tritoq\Payment\Cielo\AnaliseRisco\AnaliseResultado
+     */
+    public function getAnaliseResultado()
+    {
+        return $this->analiseResultado;
+    }
+
+    /**
+     * @param string $statusAnalise
+     * @return $this
+     */
+    public function setStatusAnalise($statusAnalise)
+    {
+        $this->_statusAnalise = $statusAnalise;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getStatusAnalise()
+    {
+        return $this->_statusAnalise;
     }
 
     /**
