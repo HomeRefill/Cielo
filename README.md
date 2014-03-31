@@ -1,7 +1,7 @@
 Tritoq\Payment\Cielo
 ============================
 
-Esta é um conjunto de classes, baseado na Library do Mrprompt para integração com o Webservice da Cielo.
+Esta é um conjunto de classes, baseado na Library do [Thiago Paes - Mrprompt](https://github.com/mrprompt/Cielo/) para integração com o web service da Cielo.
 
 Cartões Suportados:
 
