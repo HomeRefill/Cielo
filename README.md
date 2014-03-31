@@ -139,8 +139,8 @@ Exemplo de configuração de informações
 
     // Para qualquer ação será revista com ação manual posterior, caso seja de baixo risco, a transação será capturada automaticamente
 
-    $this->analise = new AnaliseRisco();
-    $this->analise
+    $analise = new AnaliseRisco();
+    $analise
         ->setCliente($cliente)
         ->setPedido($pedidoAnalise)
         ->setAfsServiceRun(true)
@@ -157,7 +157,7 @@ Exemplo de configuração de informações
         'cartao' => $cartao,
         'transacao' => $transacao,
         'pedido' => $pedido,
-        'analise' => $this->analise
+        'analise' => $analise
     ));
 
     // Desabilitando a analise de risco
@@ -201,7 +201,7 @@ Após realizada as configurações acima para realizar uma transação
     $service->doTransacao(false, false);
 
 
-    if($transacao->getStatus() === Transacao::STATUS_AUTORIZADA) {
+    if($transacao->getStatus() == Transacao::STATUS_AUTORIZADA) {
         echo 'Transação Autorizada!';
     } else {
         echo 'Transação Não Autorizada, contate seu banco!';
@@ -220,7 +220,7 @@ Enviando a transação com análise de risco
     $service->setHabilitarAnaliseRisco(true);
     $service->doTransacao(false,false);
 
-    if($transacao->getStatus() === Transacao::STATUS_AUTORIZADA) {
+    if($transacao->getStatus() == Transacao::STATUS_AUTORIZADA) {
         echo 'Transação Autorizada!';
     } else {
         echo 'Transação Não Autorizada, contate seu banco!';
@@ -241,7 +241,7 @@ Preferencialmente deixamos a captura para fazer posteriormente, devido as fraude
     $transacao->setTid('numero_da_transação_já_realizada');
     $service->doCaptura();
 
-    if($transacao->getStatus() === Transacao::STATUS_CAPTURADA) {
+    if($transacao->getStatus() == Transacao::STATUS_CAPTURADA) {
         echo 'Transação capturada com sucesso!';
     } else {
         echo 'Não foi possível capturar, status da transação: ' . $transacao->getStatus();
