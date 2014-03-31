@@ -3,16 +3,16 @@ Tritoq\Payment\Cielo
 
 Esta é um conjunto de classes, baseado na Library do [Thiago Paes - Mrprompt](https://github.com/mrprompt/Cielo/) para integração com o web service da Cielo.
 
-Cartões Suportados:
+>Cartões Suportados:
 
-`American Express`
-`Aura`
-`Diners`
-`Discover`
-`Elo`
-`JCB`
-`Master Card`
-`Visa`
+>American Express
+>Aura
+>Diners
+>Discover
+>Elo
+>JCB
+>Master Card
+>Visa
 
 Há suporte a integração com a Análise de Risco e AVS
 
