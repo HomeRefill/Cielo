@@ -294,7 +294,7 @@ A consulta da transação é um procedimento muito importante, pois é nela que 
     echo 'Status: '  . $transacao->getStatus() . '<br/>';
 
     if(isset($requisicoes[0])) {
-        echo 'XML:' . $requisicoes->getXmlRetorno()->asXML();
+        echo 'XML:' . $requisicoes[0]->getXmlRetorno()->asXML();
     }
 
 ```
