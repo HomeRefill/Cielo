@@ -16,10 +16,10 @@ use Tritoq\Payment\PortadorInterface;
  *
  * Class CieloService
  *
- * @category Library
+ * @category  Library
  * @copyright Artur Magalhães <nezkal@gmail.com>
- * @package Tritoq\Payment\Cielo
- * @license GPL-3.0+
+ * @package   Tritoq\Payment\Cielo
+ * @license   GPL-3.0+
  */
 class CieloService
 {
@@ -30,6 +30,17 @@ class CieloService
      * @const string
      */
     const VERSAO = '1.4.0';
+
+
+    /**
+     * @const string
+     */
+    const URL_TESTE = 'https://qasecommerce.cielo.com.br/servicos/ecommwsec.do';
+
+    /**
+     * @const string
+     */
+    const URL_PRODUCAO = 'https://ecommerce.cbmp.com.br/servicos/ecommwsec.do';
 
     /**
      *
@@ -168,10 +179,35 @@ class CieloService
     private $habilitarAnaliseRisco = false;
 
     /**
+     * @var string
+     */
+    private $ssl = null;
+
+    /**
+     * @param string $ssl
+     *
+     * @return $this
+     */
+    public function setSsl($ssl)
+    {
+        $this->ssl = $ssl;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSsl()
+    {
+        return $this->ssl;
+    }
+
+    /**
      *
      * Construtor onde já implementa padrão para setar os objetos por array
      *
      * @param null|array $options
+     *
      * @throws \Tritoq\Payment\Exception\InvalidArgumentException
      */
     function __construct($options = null)
@@ -211,6 +247,7 @@ class CieloService
      * Seta o objeto de análise de Risco
      *
      * @param \Tritoq\Payment\Cielo\AnaliseRisco $analiseRisco
+     *
      * @return $this
      */
     public function setAnaliseRisco($analiseRisco)
@@ -235,6 +272,7 @@ class CieloService
      * Seta a flag de análise de risco
      *
      * @param boolean $habilitarAnaliseRisco
+     *
      * @throws \Tritoq\Payment\Exception\InvalidArgumentException
      * @return $this
      */
@@ -276,6 +314,7 @@ class CieloService
      * Adiciona os valores de credenciamento da loja no XML
      *
      * @param \SimpleXMLElement $xml
+     *
      * @return \SimpleXMLElement
      */
     private function addNodeDadosEc(\SimpleXMLElement $xml)
@@ -293,6 +332,7 @@ class CieloService
      *
      *
      * @param \SimpleXMLElement $xml
+     *
      * @return \SimpleXMLElement
      */
     private function addNodeDadosPortador(\SimpleXMLElement $xml)
@@ -313,6 +353,7 @@ class CieloService
      * Adiciona informações sobre o pagamento ao XML de Requisição
      *
      * @param \SimpleXMLElement $xml
+     *
      * @return \SimpleXMLElement
      */
     private function addNodeFormaPagamento(\SimpleXMLElement $xml)
@@ -360,6 +401,7 @@ class CieloService
      * Adiciona informações do Pedido ao XML de Requisição
      *
      * @param \SimpleXMLElement $xml
+     *
      * @return \SimpleXMLElement
      */
     private function addNodeDadosPedido(\SimpleXMLElement $xml)
@@ -386,24 +428,25 @@ class CieloService
      * Metódo responsável por montar a requisição e enviar ao servidor da Cielo
      *
      * @param \SimpleXMLElement $xml
+     *
      * @return \Tritoq\Payment\Cielo\Requisicao
      */
     private function enviaRequisicao(\SimpleXMLElement $xml)
     {
 
         // URL para o ambiente de produção
-        $url = 'https://ecommerce.cbmp.com.br/servicos/ecommwsec.do';
+        $url = self::URL_PRODUCAO;
 
         // URL para o ambiente de teste
         if ($this->loja->getAmbiente() === Loja::AMBIENTE_TESTE) {
-            $url = 'https://qasecommerce.cielo.com.br/servicos/ecommwsec.do';
+            $url = self::URL_TESTE;
         }
 
         $requisicao = new Requisicao();
         $requisicao
             ->setUrl($url)
             ->setXmlRequisicao($xml)
-            ->send();
+            ->send(isset($this->ssl) ? $this->ssl : null);
 
         return $requisicao;
     }
@@ -413,7 +456,7 @@ class CieloService
      * Atualiza informações na Transação
      *
      * @param Requisicao $requisicao
-     * @param $requisicaoTipo
+     * @param            $requisicaoTipo
      */
     private function updateTransacao(Requisicao $requisicao, $requisicaoTipo)
     {
@@ -453,6 +496,7 @@ class CieloService
      *
      * @param bool $gerarToken
      * @param bool $checkAvs
+     *
      * @throws \Tritoq\Payment\Exception\InvalidArgumentException
      * @return $this
      */
@@ -683,9 +727,11 @@ class CieloService
      * Método para debugar uma transação com simulação a um xml já salvo
      *
      * @param \SimpleXMLElement $xml
+     *
      * @return $this
      */
-    public function debugConsulta (\SimpleXMLElement $xml) {
+    public function debugConsulta(\SimpleXMLElement $xml)
+    {
 
         $requisicao = new Requisicao();
         $requisicao->setXmlRetorno($xml);
@@ -700,6 +746,7 @@ class CieloService
      * Seta o objeto Cartão
      *
      * @param \Tritoq\Payment\Cielo\Cartao $cartao
+     *
      * @return $this
      */
     public function setCartao(Cartao $cartao)
@@ -725,6 +772,7 @@ class CieloService
      * Seta a loja credenciada
      *
      * @param \Tritoq\Payment\Cielo\Loja $loja
+     *
      * @return $this
      */
     public function setLoja(Loja $loja)
@@ -749,6 +797,7 @@ class CieloService
      * Seta o Pedido
      *
      * @param \Tritoq\Payment\Cielo\Pedido $pedido
+     *
      * @return $this
      */
     public function setPedido(Pedido $pedido)
@@ -773,6 +822,7 @@ class CieloService
      * Seta o Portador
      *
      * @param \Tritoq\Payment\PortadorInterface $portador
+     *
      * @return $this
      */
     public function setPortador(PortadorInterface $portador)
@@ -797,6 +847,7 @@ class CieloService
      * Seta a Transação
      *
      * @param \Tritoq\Payment\Cielo\Transacao $transacao
+     *
      * @return $this
      */
     public function setTransacao(Transacao $transacao)
