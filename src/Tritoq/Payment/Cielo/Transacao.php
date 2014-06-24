@@ -12,10 +12,10 @@ use Tritoq\Payment\Exception\InvalidArgumentException;
  *
  * Class Transacao
  *
- * @category Library
+ * @category  Library
  * @copyright Artur Magalhães <nezkal@gmail.com>
- * @package Tritoq\Payment\Cielo
- * @license GPL-3.0+
+ * @package   Tritoq\Payment\Cielo
+ * @license   GPL-3.0+
  */
 class Transacao
 {
@@ -332,7 +332,8 @@ class Transacao
      * Adiciona uma requisição e separa por seu tipo
      *
      * @param Requisicao $requisicao
-     * @param string $type
+     * @param string     $type
+     *
      * @throws \Tritoq\Payment\Exception\InvalidArgumentException
      * @return $this
      */
@@ -356,6 +357,7 @@ class Transacao
      * Retorna a requisição, se passado o tipo retorna por categoria, caso contrário retorna o array inteiro
      *
      * @param null $type
+     *
      * @throws \Tritoq\Payment\Exception\InvalidArgumentException
      * @return array
      */
@@ -382,6 +384,7 @@ class Transacao
      * Retorna o Token
      *
      * @param string $token
+     *
      * @return $this
      */
     public function setToken($token)
@@ -407,6 +410,7 @@ class Transacao
      * Seta o Status da Transação
      *
      * @param int $status
+     *
      * @throws \Tritoq\Payment\Exception\InvalidArgumentException
      * @return $this
      */
@@ -423,6 +427,7 @@ class Transacao
             case self::STATUS_CANCELADA:
             case self::STATUS_EM_AUTENTICACAO:
             case self::STATUS_EM_CANCELAMENTO:
+            case self::STATUS_ERRO:
                 $this->_status = $status;
                 return $this;
             default:
@@ -448,6 +453,7 @@ class Transacao
      * Seta o TID da transação
      *
      * @param int $tid
+     *
      * @return $this
      */
     public function setTid($tid)
@@ -479,6 +485,7 @@ class Transacao
      *
      *
      * @param int $produto
+     *
      * @throws InvalidArgumentException
      * @return $this
      */
@@ -512,13 +519,15 @@ class Transacao
      * Seta o número de parcelas da compra / transação
      *
      * @param int $parcelas
+     *
      * @throws InvalidArgumentException
      * @return $this
      */
     public function setParcelas($parcelas)
     {
-        if ((integer)$parcelas > 12 || (integer)$parcelas < 1)
+        if ((integer)$parcelas > 12 || (integer)$parcelas < 1) {
             throw new InvalidArgumentException('Número de parcelas inválidas');
+        }
 
 
         $this->_parcelas = (integer)$parcelas;
@@ -548,6 +557,7 @@ class Transacao
      * Seta se a transação vai ser capturada automaticamente (não recomendado)
      *
      * @param string $capturar
+     *
      * @throws InvalidArgumentException
      * @return $this
      */
@@ -585,6 +595,7 @@ class Transacao
      * 3 - Autorizar sem autenticação       AUTORIZAR_SEM_AUTENTICACAO
      *
      * @param int $autorizar
+     *
      * @throws InvalidArgumentException
      * @return $this
      */
@@ -620,6 +631,7 @@ class Transacao
      * Seta o campo livre disponível para o estabelecimento
      *
      * @param string $campoLivre
+     *
      * @return $this
      */
     public function setCampoLivre($campoLivre)
@@ -641,6 +653,7 @@ class Transacao
 
     /**
      * @param \Tritoq\Payment\Cielo\AnaliseRisco\AnaliseResultado $analiseResultado
+     *
      * @return $this
      */
     public function setAnaliseResultado($analiseResultado)
@@ -659,6 +672,7 @@ class Transacao
 
     /**
      * @param string $statusAnalise
+     *
      * @return $this
      */
     public function setStatusAnalise($statusAnalise)
