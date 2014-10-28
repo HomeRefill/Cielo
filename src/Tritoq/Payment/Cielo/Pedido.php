@@ -165,7 +165,7 @@ class Pedido
      */
     public function setDescricao($descricao)
     {
-        $this->descricao = $descricao;
+        $this->descricao = substr($descricao, 0, 99);
         return $this;
     }
 
