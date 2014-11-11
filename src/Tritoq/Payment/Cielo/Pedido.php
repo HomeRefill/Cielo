@@ -47,7 +47,7 @@ class Pedido
      *
      * Número/Identificador do pedido
      *
-     * @var integer
+     * @var string
      */
     private $_numero;
 
@@ -106,14 +106,16 @@ class Pedido
      *
      * Seta o número do pedido
      *
-     * @param int $numero
+     * @param string $numero
      * @throws InvalidArgumentException
      * @return $this
      */
     public function setNumero($numero)
     {
-        if (preg_match('/([[:alpha:]]|[[:punct:]]|[[:space:]])/', $numero)) {
-            throw new InvalidArgumentException('Número do pedido inválido.');
+        // if (preg_match('/([[:alpha:]]|[[:punct:]]|[[:space:]])/', $numero)) {
+        //     throw new InvalidArgumentException('Número do pedido inválido.');
+        if (strlen($numero) > 20) {
+            throw new InvalidArgumentException('Número do pedido inválido. Max length of 20 chars.');
         } else {
             $this->_numero = substr($numero, 0, 20);
             return $this;
@@ -124,7 +126,7 @@ class Pedido
      *
      * Retorna o número do pedido
      *
-     * @return int
+     * @return string
      */
     public function getNumero()
     {
