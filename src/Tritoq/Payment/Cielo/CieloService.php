@@ -40,7 +40,7 @@ class CieloService
     /**
      * @const string
      */
-    const URL_PRODUCAO = 'https://ecommerce.cbmp.com.br/servicos/ecommwsec.do';
+    const URL_PRODUCAO = 'https://ecommerce.cielo.com.br/servicos/ecommwsec.do';
 
     /**
      *
