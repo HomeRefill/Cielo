@@ -272,7 +272,7 @@ class Requisicao
 
             // informa a localização do certificado para verificação com o peer
             curl_setopt($_curl, CURLOPT_CAINFO, $ssl);
-            curl_setopt($_curl, CURLOPT_SSLVERSION, 3);
+            curl_setopt($_curl, CURLOPT_SSLVERSION, 4);
         }
 
         // Faz a requisição HTTP
