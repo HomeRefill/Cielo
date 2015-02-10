@@ -15,10 +15,10 @@ use Tritoq\Payment\Exception\ResourceNotFoundException;
  *
  * Class Requisicao
  *
- * @category Library
+ * @category  Library
  * @copyright Artur Magalhães <nezkal@gmail.com>
- * @package Tritoq\Payment\Cielo
- * @license GPL-3.0+
+ * @package   Tritoq\Payment\Cielo
+ * @license   GPL-3.0+
  */
 class Requisicao
 {
@@ -74,6 +74,24 @@ class Requisicao
      * @var array
      */
     private $info = array();
+
+    /**
+     *
+     * Versão SSL da conexão
+     *
+     * @var integer
+     */
+    private $sslVersion = 4;
+
+    function __construct($options = null)
+    {
+        if (is_array($options)) {
+
+            if (isset($options['sslVersion']) && is_int($options['sslVersion'])) {
+                $this->sslVersion = $options['sslVersion'];
+            }
+        }
+    }
 
 
     /**
@@ -147,6 +165,7 @@ class Requisicao
      * Seta a URL que será chamada
      *
      * @param string $url
+     *
      * @throws \Tritoq\Payment\Exception\InvalidArgumentException
      * @return $this
      */
@@ -178,6 +197,7 @@ class Requisicao
      * Seta o XML de requisição
      *
      * @param \SimpleXMLElement $xmlRequisicao
+     *
      * @return $this
      */
     public function setXmlRequisicao(\SimpleXMLElement $xmlRequisicao)
@@ -202,6 +222,7 @@ class Requisicao
      * Seta o XML de Retorno
      *
      * @param \SimpleXMLElement $xmlRetorno
+     *
      * @return $this
      */
     public function setXmlRetorno($xmlRetorno)
@@ -217,6 +238,7 @@ class Requisicao
      * Feita em curl
      *
      * @param bool $ssl
+     *
      * @throws \Tritoq\Payment\Exception\ResourceNotFoundException
      * @throws \Exception
      * @return $this
@@ -272,7 +294,7 @@ class Requisicao
 
             // informa a localização do certificado para verificação com o peer
             curl_setopt($_curl, CURLOPT_CAINFO, $ssl);
-            curl_setopt($_curl, CURLOPT_SSLVERSION, 4);
+            curl_setopt($_curl, CURLOPT_SSLVERSION, $this->sslVersion);
         }
 
         // Faz a requisição HTTP

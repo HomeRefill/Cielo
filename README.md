@@ -75,6 +75,7 @@ Exemplo de configuração de informações
         ->setUrlRetorno('http://google.com.br')
         ->setChave(Loja::LOJA_CHAVE_AMBIENTE_TESTE)
         ->setNumeroLoja(Loja::LOJA_NUMERO_AMBIENTE_TESTE);
+        //->setSslCertificado("caminhodocertificado");
 
     $cartao = new Cartao();
     $cartao
@@ -159,6 +160,11 @@ Exemplo de configuração de informações
         'pedido' => $pedido,
         'analise' => $analise
     ));
+    
+    // Modificando a versão do certificado para resquisição
+    
+    //
+    $service->setSslVersion(3);
 
     // Desabilitando a analise de risco
     $service->setHabilitarAnaliseRisco(false);

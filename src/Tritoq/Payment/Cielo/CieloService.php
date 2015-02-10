@@ -179,6 +179,19 @@ class CieloService
     private $habilitarAnaliseRisco = false;
 
     /**
+     *
+     * Número da versão de conexão do SSL
+     * 1 - SSLV1
+     * 2 - SSLV2
+     * 3 - SSLV3
+     * 4 - SSLV4
+     *
+     * @var int
+     */
+
+    private $sslVersion = 4;
+
+    /**
      * @var string
      */
     private $ssl = null;
@@ -201,6 +214,33 @@ class CieloService
     {
         return $this->ssl;
     }
+
+    /**
+     * @return int
+     */
+    public function getSslVersion()
+    {
+        return $this->sslVersion;
+    }
+
+    /**
+     * @param int $sslVersion
+     *
+     * @return $this
+     * @throws InvalidArgumentException
+     */
+    public function setSslVersion($sslVersion)
+    {
+        $sslVersion = intval($sslVersion);
+
+        if ($sslVersion < 1 || $sslVersion > 4) {
+            throw new InvalidArgumentException('O valor experado para a versão do SSL é de 1 a 4');
+        }
+
+        $this->sslVersion = $sslVersion;
+        return $this;
+    }
+
 
     /**
      *
@@ -442,7 +482,12 @@ class CieloService
             $url = self::URL_TESTE;
         }
 
-        $requisicao = new Requisicao();
+        $requisicao = new Requisicao(
+            array(
+                'sslVersion' => $this->getSslVersion()
+            )
+        );
+
         $requisicao
             ->setUrl($url)
             ->setXmlRequisicao($xml)
