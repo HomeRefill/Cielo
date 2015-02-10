@@ -160,10 +160,9 @@ Exemplo de configuração de informações
         'pedido' => $pedido,
         'analise' => $analise
     ));
+        
     
-    // Modificando a versão do certificado para resquisição
-    
-    //
+    // Setando o tipo de versão de conexão SSL 
     $service->setSslVersion(3);
 
     // Desabilitando a analise de risco
