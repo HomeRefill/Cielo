@@ -258,6 +258,7 @@ class CieloService
 
         if (isset($options['loja']) && $options['loja'] instanceof Loja) {
             $this->loja = $options['loja'];
+            $this->ssl = $options['loja']->getSslCertificado();
         }
 
         if (isset($options['transacao']) && $options['transacao'] instanceof Transacao) {
