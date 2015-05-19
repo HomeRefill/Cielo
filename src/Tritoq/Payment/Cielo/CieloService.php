@@ -527,6 +527,11 @@ class CieloService
                 $this->transacao->setStatusAnalise($analiseResultado->getStatus());
             }
 
+            // Pega a URL de redirecionamento à Cielo
+            if(!empty($xmlRetorno->{'url-autenticacao'})) {
+                $this->transacao->setUrlAutenticacao($xmlRetorno->{'url-autenticacao'});
+            }
+
             if (!$this->transacao->getTid()) {
                 // Atualiza a TID da Transação
                 $this->transacao->setTid($xmlRetorno->tid);
