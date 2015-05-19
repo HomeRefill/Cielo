@@ -320,6 +320,14 @@ class Transacao
 
     /**
      *
+     * URL de redirecionamento à Cielo
+     *
+     * @var string
+     */
+    private $_urlAutenticacao = '';
+
+    /**
+     *
      * Array onde são guardadas as requisições
      *
      * @var array
@@ -687,6 +695,25 @@ class Transacao
     public function getStatusAnalise()
     {
         return $this->_statusAnalise;
+    }
+
+    /**
+     * @param string $urlAutenticacao
+     *
+     * @return $this
+     */
+    public function setUrlAutenticacao($urlAutenticacao)
+    {
+        $this->_urlAutenticacao = $urlAutenticacao;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUrlAutenticacao()
+    {
+        return $this->_urlAutenticacao;
     }
 
     /**
