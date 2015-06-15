@@ -326,8 +326,8 @@ class Requisicao
             }
 
             // Se a resposta tiver uma tag de erro
-            if (!empty($this->xmlRetorno->erro)) {
-                $this->errors[] = $this->xmlRetorno->erro;
+            if ($this->xmlRetorno->getName() == 'erro') {
+                $this->errors[] = $this->xmlRetorno;
             }
 
         } else {
