@@ -23,7 +23,7 @@ define("CIELO", "1001734898");
 define("CIELO_CHAVE", "e84827130b9837473681c2787007da5914d6359947015a5cdb2b8843db0fa832");
 
 
-// Envia requisiÁ„o
+// Envia requisi√ß√£o
 function httprequest($paEndereco, $paPost){
 
 	$sessao_curl = curl_init();
@@ -39,22 +39,28 @@ function httprequest($paEndereco, $paPost){
 	curl_setopt($sessao_curl, CURLOPT_SSL_VERIFYHOST, 2);
 
 	//  CURLOPT_SSL_CAINFO
-	//  informa a localizaÁ„o do certificado para verificaÁ„o com o peer
+	//  informa a localiza√ß√£o do certificado para verifica√ß√£o com o peer
 	curl_setopt($sessao_curl, CURLOPT_CAINFO, getcwd() .
 			"/ssl/VeriSignClass3PublicPrimaryCertificationAuthority-G5.crt");
+			
+			
+	/*
+	  PROBLEMAS DE REDIRECIONAMENTO?
+	  altere a linha abaixo: curl_setopt($sessao_curl, CURLOPT_SSLVERSION, 4);
+	*/
 	curl_setopt($sessao_curl, CURLOPT_SSLVERSION, 3);
 
 	//  CURLOPT_CONNECTTIMEOUT
-	//  o tempo em segundos de espera para obter uma conex„o
+	//  o tempo em segundos de espera para obter uma conex√£o
 	curl_setopt($sessao_curl, CURLOPT_CONNECTTIMEOUT, 10);
 
 	//  CURLOPT_TIMEOUT
-	//  o tempo m·ximo em segundos de espera para a execuÁ„o da requisiÁ„o (curl_exec)
+	//  o tempo m√°ximo em segundos de espera para a execu√ß√£o da requisi√ß√£o (curl_exec)
 	curl_setopt($sessao_curl, CURLOPT_TIMEOUT, 40);
 
 	//  CURLOPT_RETURNTRANSFER
 	//  TRUE para curl_exec retornar uma string de resultado em caso de sucesso, ao
-	//  invÈs de imprimir o resultado na tela. Retorna FALSE se h· problemas na requisiÁ„o
+	//  inv√©s de imprimir o resultado na tela. Retorna FALSE se h√° problemas na requisi√ß√£o
 	curl_setopt($sessao_curl, CURLOPT_RETURNTRANSFER, true);
 
 	curl_setopt($sessao_curl, CURLOPT_POST, true);
