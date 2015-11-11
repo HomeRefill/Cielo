@@ -7,6 +7,7 @@ use Tritoq\Payment\Cielo\CieloService;
 use Tritoq\Payment\Cielo\Loja;
 use Tritoq\Payment\Cielo\Pedido;
 use Tritoq\Payment\Cielo\Portador;
+use Tritoq\Payment\Cielo\Requisicao;
 use Tritoq\Payment\Cielo\Transacao;
 
 /**
@@ -54,6 +55,7 @@ class CieloServiceTest extends \PHPUnit_Framework_TestCase
             ->setNomeLoja('Nome da Loja')
             ->setAmbiente(Loja::AMBIENTE_TESTE)
             ->setUrlRetorno('http://google.com.br')
+            ->setSslCertificado( __DIR__ . '/../ssl/VeriSignClass3PublicPrimaryCertificationAuthority-G5.crt')
             ->setChave(Loja::LOJA_CHAVE_AMBIENTE_TESTE)
             ->setNumeroLoja(Loja::LOJA_NUMERO_AMBIENTE_TESTE);
 
@@ -176,8 +178,10 @@ class CieloServiceTest extends \PHPUnit_Framework_TestCase
         $this->gateway->setHabilitarAnaliseRisco(true);
         $this->gateway->doTransacao(false, false);
         $reqs = $this->gateway->getTransacao()->getRequisicoes(Transacao::REQUISICAO_TIPO_TRANSACAO);
-        $reqs[0]->getXmlRetorno()->asXML(OUTPUT . 'xml/transacao-com-analise.xml');
-        $reqs[0]->getXmlRequisicao()->asXML(OUTPUT . 'xml/requisicao-transacao-com-analise.xml');
+        if (sizeof($reqs) > 0 && $reqs[0] instanceof Requisicao) {
+            $reqs[0]->getXmlRetorno()->asXML(OUTPUT . 'xml/transacao-com-analise.xml');
+            $reqs[0]->getXmlRequisicao()->asXML(OUTPUT . 'xml/requisicao-transacao-com-analise.xml');
+        }
         $this->assertEquals((string)Transacao::STATUS_AUTORIZADA, $this->transacao->getStatus());
     }
 
@@ -190,7 +194,9 @@ class CieloServiceTest extends \PHPUnit_Framework_TestCase
         $this->gateway->doCaptura();
         $this->assertEquals((string)Transacao::STATUS_CAPTURADA, $this->transacao->getStatus());
         $reqs = $this->gateway->getTransacao()->getRequisicoes(Transacao::REQUISICAO_TIPO_CAPTURA);
-        $reqs[0]->getXmlRetorno()->asXML(OUTPUT . 'xml/captura.xml');
+        if (sizeof($reqs) > 0) {
+            $reqs[0]->getXmlRetorno()->asXML(OUTPUT . 'xml/captura.xml');
+        }
     }
 
     /**
@@ -202,7 +208,9 @@ class CieloServiceTest extends \PHPUnit_Framework_TestCase
         $this->gateway->doConsulta();
         $this->assertEquals((string)Transacao::STATUS_AUTORIZADA, $this->transacao->getStatus());
         $reqs = $this->gateway->getTransacao()->getRequisicoes(Transacao::REQUISICAO_TIPO_CONSULTA);
-        $reqs[0]->getXmlRetorno()->asXML(OUTPUT . 'xml/consulta.xml');
+        if (sizeof($reqs) > 0) {
+            $reqs[0]->getXmlRetorno()->asXML(OUTPUT . 'xml/consulta.xml');
+        }
     }
 
     /**
@@ -214,7 +222,9 @@ class CieloServiceTest extends \PHPUnit_Framework_TestCase
         $this->gateway->doCancela();
         $this->assertEquals((string)Transacao::STATUS_CANCELADA, $this->transacao->getStatus());
         $reqs = $this->gateway->getTransacao()->getRequisicoes(Transacao::REQUISICAO_TIPO_CANCELA);
-        $reqs[0]->getXmlRetorno()->asXML(OUTPUT . 'xml/cancela.xml');
+        if (sizeof($reqs) > 0) {
+            $reqs[0]->getXmlRetorno()->asXML(OUTPUT . 'xml/cancela.xml');
+        }
     }
 
     /**
@@ -324,7 +334,9 @@ class CieloServiceTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals((string)Transacao::STATUS_AUTORIZADA, $this->transacao->getStatus());
 
         $reqs = $this->gateway->getTransacao()->getRequisicoes(Transacao::REQUISICAO_TIPO_TRANSACAO);
-        $reqs[0]->getXmlRetorno()->asXML(OUTPUT . 'xml/' . $bandeira . '.xml');
+        if (sizeof($reqs) > 0) {
+            $reqs[0]->getXmlRetorno()->asXML(OUTPUT . 'xml/' . $bandeira . '.xml');
+        }
     }
 }
  

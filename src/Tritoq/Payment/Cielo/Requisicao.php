@@ -3,6 +3,7 @@
 namespace Tritoq\Payment\Cielo;
 
 
+use Prophecy\Exception\Prediction\AggregateException;
 use Tritoq\Payment\Exception\InvalidArgumentException;
 use Tritoq\Payment\Exception\ResourceNotFoundException;
 
@@ -325,10 +326,17 @@ class Requisicao
                 $this->errors[] = $e->getTraceAsString();
             }
 
-            // Se a resposta tiver uma tag de erro
-            if ($this->xmlRetorno->getName() == 'erro') {
-                $this->errors[] = $this->xmlRetorno;
+            if ($this->xmlRetorno == NULL) {
+                $this->errors[] = "Um erro encontrado";
+                $this->errors = array_merge($this->errors, $info);
+                $this->xmlRetorno = new \SimpleXMLElement("<error>" . var_export($info, true) . "</error>");
+            } else {
+                // Se a resposta tiver uma tag de erro
+                if ($this->xmlRetorno->getName() == 'erro') {
+                    $this->errors[] = $this->xmlRetorno;
+                }
             }
+
 
         } else {
             $this->retorno = $result;

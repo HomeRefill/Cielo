@@ -104,6 +104,7 @@ class Loja
      * Seta o certificado de segurança
      *
      * @param string $sslCertificado
+     * @return $this
      * @throws \Tritoq\Payment\Exception\InvalidArgumentException
      */
     public function setSslCertificado($sslCertificado = '')
@@ -113,6 +114,8 @@ class Loja
         }
 
         $this->_sslCertificado = $sslCertificado;
+
+        return $this;
     }
 
     /**

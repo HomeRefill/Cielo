@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <transacao xmlns="http://ecommerce.cbmp.com.br" versao="1.4.0" id="1">
-  <tid>100699306910AA451001</tid>
+  <tid>10069930690004CA17DA</tid>
   <pan>r6qvdWW+ZmrNmFdXB8jaV0fNrnhIl6LiJOL9lnuypdA=</pan>
   <dados-pedido>
     <numero>9024</numero>
     <valor>1200</valor>
     <moeda>986</moeda>
-    <data-hora>2014-03-27T18:09:24.695-03:00</data-hora>
+    <data-hora>2015-11-11T21:17:46.320-02:00</data-hora>
     <descricao>Descriï¿½ï¿½o do Pedido</descricao>
     <idioma>PT</idioma>
     <taxa-embarque>0</taxa-embarque>
@@ -20,17 +20,17 @@
   <autenticacao>
     <codigo>4</codigo>
     <mensagem>Transacao sem autenticacao</mensagem>
-    <data-hora>2014-03-27T18:09:24.702-03:00</data-hora>
+    <data-hora>2015-11-11T21:17:46.338-02:00</data-hora>
     <valor>1200</valor>
     <eci>7</eci>
   </autenticacao>
   <autorizacao>
     <codigo>4</codigo>
     <mensagem>Transação autorizada</mensagem>
-    <data-hora>2014-03-27T18:09:24.706-03:00</data-hora>
+    <data-hora>2015-11-11T21:17:46.340-02:00</data-hora>
     <valor>1200</valor>
     <lr>00</lr>
     <arp>123456</arp>
-    <nsu>092165</nsu>
+    <nsu>022077</nsu>
   </autorizacao>
 </transacao>
