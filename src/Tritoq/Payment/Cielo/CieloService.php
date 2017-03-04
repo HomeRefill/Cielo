@@ -755,10 +755,12 @@ class CieloService
      *
      * Método que faz a requisição de cancelamento da transação
      *
+     * @param int $valor
+     *
      * @return $this
      * @throws \Tritoq\Payment\Exception\ResourceNotFoundException
      */
-    public function doCancela()
+    public function doCancela($valor = null)
     {
         if (strlen($this->transacao->getTid()) === 0) {
             throw new ResourceNotFoundException('Não foi possível fazer a autorização TID não informado!');
@@ -781,6 +783,12 @@ class CieloService
 
         // Adiciona os dados de credenciamento da loja
         $this->addNodeDadosEc($xml);
+
+        // Estorna um valor parcial
+        // Não funciona para cartões AMEX
+        if (!is_null($valor) && $valor > 0) {
+            $xml->addChild('valor', $valor);
+        }
 
         // Envia a requisição para a Cielo
         $requisicao = $this->enviaRequisicao($xml);
