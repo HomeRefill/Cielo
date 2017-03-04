@@ -132,14 +132,6 @@ class CieloService
 
     /**
      *
-     * Token de Test
-     *
-     * @const string
-     */
-    const TEST_TOKEN = 'TuS6LeBHWjqFFtE7S3zR052Jl/KUlD+tYJFpAdlA87E=';
-
-    /**
-     *
      * Loja Credenciada a Cielo
      *
      * @var Loja
@@ -395,6 +387,13 @@ class CieloService
     private function addNodeDadosPortador(\SimpleXMLElement $xml)
     {
         $dp = $xml->addChild('dados-portador');
+
+        $token = $this->cartao->getToken();
+        if (!is_null($token)) {
+            $dp->addChild('token', urlencode($this->cartao->getToken()));
+            return $dp;
+        }
+
         $dp->addChild('numero', $this->cartao->getNumero());
         $dp->addChild('validade', $this->cartao->getValidade());
         $dp->addChild('indicador', $this->cartao->getIndicador());
@@ -421,31 +420,6 @@ class CieloService
         $fp->addChild('parcelas', $this->transacao->getParcelas());
 
         return $fp;
-    }
-
-    /**
-     *
-     * Adiciona dados de portados para criar um token
-     *
-     * @param \SimpleXMLElement $xml
-     *
-     * @return \SimpleXMLElement
-     */
-    private function addNodeDadosDp(\SimpleXMLElement $xml)
-    {
-        if (is_null($this->cartao->getToken())) {
-            return;
-        }
-
-        $token = urlencode($this->cartao->getToken());
-        if ($this->loja->getAmbiente() === Loja::AMBIENTE_TESTE) {
-            $token = urlencode(self::TEST_TOKEN);
-        }
-
-        $dp = $xml->addChild('dados-portador');
-        $dp->addChild('token', $token);
-
-        return $dp;
     }
 
     /**
@@ -629,7 +603,6 @@ class CieloService
         // Adicionando blocos estáticos ao XML
 
         $this->addNodeDadosEc($xml);
-        $this->addNodeDadosDp($xml);
         $this->addNodeDadosPortador($xml);
         $this->addNodeDadosPedido($xml);
         $this->addNodeFormaPagamento($xml);
@@ -638,7 +611,10 @@ class CieloService
         $xml->addChild('autorizar', $this->transacao->getAutorizar());
         $xml->addChild('capturar', $this->transacao->getCapturar());
         $xml->addChild('campo-livre', $this->transacao->getCampoLivre());
-        $xml->addChild('bin', substr($this->cartao->getNumero(), 0, 6));
+
+        if (!is_null($this->cartao->getNumero())) {
+            $xml->addChild('bin', substr($this->cartao->getNumero(), 0, 6));
+        }
 
         // Verifica se vai ser gerado o token
 

@@ -18,6 +18,14 @@ class Cartao
 {
     /**
      *
+     * Constante de um token de cartão
+     *
+     * @const string
+     */
+    const TEST_CARTAO_TOKEN = 'TuS6LeBHWjqFFtE7S3zR052Jl/KUlD+tYJFpAdlA87E=';
+
+    /**
+     *
      * Constante com um número de cartão de Crédito fornecido pela Cielo de Testes
      *
      * @const integer
@@ -380,7 +388,6 @@ class Cartao
     }
 
     /**
-     *
      * Seta o token de um Cartão
      *
      * @param string $token
@@ -393,12 +400,6 @@ class Cartao
         return $this;
     }
 
-    /**
-     *
-     * Retorna um token de um Cartão
-     *
-     * @return string
-     */
     public function getToken()
     {
         return $this->_token;
