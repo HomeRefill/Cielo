@@ -124,6 +124,22 @@ class CieloService
 
     /**
      *
+     * Cabeçalho XML para requisição de token
+     *
+     * @const string
+     */
+    const REQUEST_TOKEN_HEADER = 'requisicao-token';
+
+    /**
+     *
+     * Token de Test
+     *
+     * @const string
+     */
+    const TEST_TOKEN = 'TuS6LeBHWjqFFtE7S3zR052Jl/KUlD+tYJFpAdlA87E=';
+
+    /**
+     *
      * Loja Credenciada a Cielo
      *
      * @var Loja
@@ -407,6 +423,48 @@ class CieloService
         return $fp;
     }
 
+    /**
+     *
+     * Adiciona dados de portados para criar um token
+     *
+     * @param \SimpleXMLElement $xml
+     *
+     * @return \SimpleXMLElement
+     */
+    private function addNodeDadosDp(\SimpleXMLElement $xml)
+    {
+        if (is_null($this->cartao->getToken())) {
+            return;
+        }
+
+        $token = urlencode($this->cartao->getToken());
+        if ($this->loja->getAmbiente() === Loja::AMBIENTE_TESTE) {
+            $token = urlencode(self::TEST_TOKEN);
+        }
+
+        $dp = $xml->addChild('dados-portador');
+        $dp->addChild('token', $token);
+
+        return $dp;
+    }
+
+    /**
+     *
+     * Adiciona dados de portados para criar um token
+     *
+     * @param \SimpleXMLElement $xml
+     *
+     * @return \SimpleXMLElement
+     */
+    private function addNodeDadosDpToken(\SimpleXMLElement $xml)
+    {
+        $dp = $xml->addChild('dados-portador');
+        $dp->addChild('numero', $this->getCartao()->getNumero());
+        $dp->addChild('validade', $this->getCartao()->getValidade());
+        $dp->addChild('nome-portador', $this->getCartao()->getNomePortador());
+
+        return $dp;
+    }
 
     /**
      *
@@ -571,10 +629,10 @@ class CieloService
         // Adicionando blocos estáticos ao XML
 
         $this->addNodeDadosEc($xml);
+        $this->addNodeDadosDp($xml);
         $this->addNodeDadosPortador($xml);
         $this->addNodeDadosPedido($xml);
         $this->addNodeFormaPagamento($xml);
-
 
         $xml->addChild('url-retorno', $this->loja->getUrlRetorno());
         $xml->addChild('autorizar', $this->transacao->getAutorizar());
@@ -607,6 +665,30 @@ class CieloService
         $this->updateTransacao($requisicao, Transacao::REQUISICAO_TIPO_TRANSACAO);
 
         return $this;
+    }
+
+    /**
+     * Gera um token para um Cartão
+     *
+     * @return Requisicao
+     */
+    public function doToken()
+    {
+        $xml = "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?><%s id='%d' versao='%s'></%s>";
+        $xml = sprintf(
+            $xml,
+            self::REQUEST_TOKEN_HEADER,
+            self::TRANSACAO_ID,
+            self::VERSAO,
+            self::REQUEST_TOKEN_HEADER
+        );
+
+        $xml = new \SimpleXMLElement($xml);
+
+        $this->addNodeDadosEc($xml);
+        $this->addNodeDadosDpToken($xml);
+
+        return $this->enviaRequisicao($xml);
     }
 
     /**

@@ -167,6 +167,13 @@ class Cartao
     private $_validade;
 
     /**
+     * Token
+     *
+     * @var string
+     */
+    private $_token;
+
+    /**
      *
      * Seta a validade do Cartão, formato YYYYmm
      *
@@ -370,5 +377,30 @@ class Cartao
     public function getNomePortador()
     {
         return $this->_nomePortador;
+    }
+
+    /**
+     *
+     * Seta o token de um Cartão
+     *
+     * @param string $token
+     *
+     * @return $this
+     */
+    public function setToken($token)
+    {
+        $this->_token = $token;
+        return $this;
+    }
+
+    /**
+     *
+     * Retorna um token de um Cartão
+     *
+     * @return string
+     */
+    public function getToken()
+    {
+        return $this->_token;
     }
 } 
