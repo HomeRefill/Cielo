@@ -343,6 +343,11 @@ class Requisicao
             $this->errors[] = $result;
         }
 
+        $now = (new \DateTime())->format("Y-m-d H:m:s");
+        $requestContent = $this->xmlRequisicao->asXML();
+        $status = $this->status;
+        file_put_contents('/tmp/cielo_request_content.txt', "$now\n\nRequest\n\n$requestContent\n\nstatus\n\n$status\n\n$result".PHP_EOL, FILE_APPEND );
+
         return $this;
     }
 } 
